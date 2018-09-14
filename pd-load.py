@@ -8,4 +8,4 @@ with open("<filename>.csv",'r') as f:
     for line in f:
       f1.write(line.replace('\x00',''))
 df = pd.read_csv('update_file.csv')
-print df
+print(df)
