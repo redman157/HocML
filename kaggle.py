@@ -9,9 +9,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import Imputer,OneHotEncoder,LabelEncoder
-validation_size = 0.20
+validation_size = 0.20 # phuong size cua validation = 20%
 seed = 7
 path = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+
 filename = (path.split('/')[-1])
 dir = os.path.join(os.path.abspath(os.path.dirname(filename)))
 r = requests.get(path,allow_redirects=True, stream = True,verify = False)
@@ -20,11 +21,9 @@ if r.status_code == 200:
     f.write(r.content)
 cols = ['SepalLength','SepalWidth','PetalLength', 'PetalWidth',"Class"] 
 data = pd.read_csv('/content/iris.data',names = cols)
+array = data.values
+X = array[:,0:4]
+y = array[:,4]
 enc = LabelEncoder()
-data['Class'] = enc.fit_transform(data['Class'])
-y = data['Class']
-X_train,y_train,X_test,y_test = train_test_split(X,y,test_size = validation_size,random_state = seed)
-my_imputer = Imputer()
-X_train = my_imputer.fit_transform(X_train)
-X_test = my_imputer.transform(X_test)
-
+y_1 = y.apply(enc.fit_transform)
+y_1.head()
